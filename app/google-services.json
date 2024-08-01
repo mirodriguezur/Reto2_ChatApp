@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "538470828834",
+    "firebase_url": "https://ejemplochat-5f275-default-rtdb.firebaseio.com",
+    "project_id": "ejemplochat-5f275",
+    "storage_bucket": "ejemplochat-5f275.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538470828834:android:99c2fbca597fbc2927f37b",
+        "android_client_info": {
+          "package_name": "aplicacionesmoviles.avanzado.todosalau.ejemplochat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEvIdNOpECtQz6q3XtkNntjlqCRo7haXQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
