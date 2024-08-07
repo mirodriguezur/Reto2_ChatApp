@@ -1,6 +1,11 @@
 package aplicacionesmoviles.avanzado.todosalau.ejemplochat.presenter;
 
+import android.net.Uri;
+
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,9 +29,10 @@ public class RegistroPresenter {
         String name = view.getName(); // Obtiene el nombre del usuario desde la vista
         String email = view.getEmail(); // Obtiene el correo electrónico del usuario desde la vista
         String password = view.getPassword(); // Obtiene la contraseña del usuario desde la vista
+        Uri imagePath = view.getImagePath(); // Obtiene la ruta de la imagen del usuario desde la vista
 
         // Verifica si algún campo está vacío
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || imagePath == null) {
             view.showToast("Por favor, completa todos los campos"); // Muestra un mensaje de advertencia en la vista
             return; // Sale del método si algún campo está vacío
         }
@@ -46,19 +52,34 @@ public class RegistroPresenter {
                 userData.put("name", name); // Agrega el nombre del usuario al mapa
                 userData.put("email", email); // Agrega el correo electrónico del usuario al mapa
 
-                // Llama al método del modelo para almacenar los datos del usuario en Firestore
-                model.storeUserData(user, userData, new RegistroModel.RegistroCallback() {
-                    @Override
-                    public void onSuccess(Object result) {
-                        view.showToast("Registro exitoso"); // Muestra un mensaje de éxito en la vista
-                        view.clearInputFields(); // Limpia los campos de entrada en la vista
-                        view.navigateToLogin(); // Navega a la pantalla de inicio de sesión en la vista
-                    }
+                FirebaseStorage storage = FirebaseStorage.getInstance();
+                StorageReference storageRef = storage.getReference();
+                StorageReference imageRef = storageRef.child("images/" + user.getUid() + ".jpg");  // Crea una referencia de almacenamiento para la imagen del usuario
 
-                    @Override
-                    public void onFailure(Exception e) {
-                        view.showToast("Error al registrar en Firestore"); // Muestra un mensaje de error en la vista
-                    }
+                UploadTask uploadTask = imageRef.putFile(imagePath);
+
+                uploadTask.addOnSuccessListener(taskSnapshot -> {
+                    imageRef.getDownloadUrl().addOnSuccessListener(uri-> {
+                        String imageUrl = uri.toString();
+                        userData.put("profilePicture", imageUrl);
+
+                        // Llama al método del modelo para almacenar los datos del usuario en Firestore
+                        model.storeUserData(user, userData, new RegistroModel.RegistroCallback() {
+                            @Override
+                            public void onSuccess(Object result) {
+                            view.showToast("Registro exitoso"); // Muestra un mensaje de éxito en la vista
+                            view.clearInputFields(); // Limpia los campos de entrada en la vista
+                            view.navigateToLogin(); // Navega a la pantalla de inicio de sesión en la vista
+                            }
+
+                            @Override
+                            public void onFailure(Exception e) {
+                                view.showToast("Error al registrar en Firestore"); // Muestra un mensaje de error en la vista
+                            }
+                        });
+                    });
+                }).addOnFailureListener(e -> {
+                    view.showToast("Error al subir la imagen");
                 });
             }
 

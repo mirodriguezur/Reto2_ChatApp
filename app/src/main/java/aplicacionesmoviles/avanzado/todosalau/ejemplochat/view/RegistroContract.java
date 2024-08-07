@@ -1,4 +1,7 @@
 package aplicacionesmoviles.avanzado.todosalau.ejemplochat.view;
+
+import android.net.Uri;
+
 /**
  * Interfaz que define las operaciones disponibles para la vista de registro.
  */
@@ -40,5 +43,11 @@ public interface RegistroContract {
          * @return Contraseña ingresada.
          */
         String getPassword();
+
+        /**
+         * Obtiene la Uri de la imagen de la galería seleccionada por el usuario.
+         * @return Uri de la imagen obtenida.
+         */
+        Uri getImagePath();
     }
 }

@@ -1,15 +1,19 @@
 package aplicacionesmoviles.avanzado.todosalau.ejemplochat.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -44,12 +48,21 @@ public class UserAdapter extends ArrayAdapter<UserModel> {
         // Referencias a las vistas del layout
         TextView textViewName = convertView.findViewById(R.id.textViewName);
         TextView textViewEmail = convertView.findViewById(R.id.textViewEmail);
+        ImageView imageViewUser = convertView.findViewById(R.id.imageViewUser);
         Button buttonChat = convertView.findViewById(R.id.buttonChat);
 
         // Configurar el contenido de las vistas con los datos del usuario
         if (user != null) {
             textViewName.setText(user.getName());  // Mostrar el nombre del usuario
             textViewEmail.setText(user.getEmail()); // Mostrar el correo electrónico del usuario
+            // Obtener la URL de la imagen y cargarla con Glide
+            String imageUrl = user.getProfilePicture();
+            Uri imagePath = Uri.parse(imageUrl);
+            if (imageUrl != null) {
+                Glide.with(context)
+                        .load(imagePath)
+                        .into(imageViewUser);
+            }
 
             // Configurar el listener del botón "Chatear"
             buttonChat.setOnClickListener(v -> {
