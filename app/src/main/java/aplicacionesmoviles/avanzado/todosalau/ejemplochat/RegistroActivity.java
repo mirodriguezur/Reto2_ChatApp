@@ -1,20 +1,29 @@
 package aplicacionesmoviles.avanzado.todosalau.ejemplochat;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import android.app.Activity;
 import android.content.Intent;
+
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.auth.User;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +50,10 @@ public class RegistroActivity extends AppCompatActivity implements RegistroContr
     private EditText editTextPassword;
     private Button btnRegister;
     private TextView textViewLogin;
+    private ImageView userImageView;
+    private FloatingActionButton addImageButton;
+
+    private ActivityResultLauncher<Intent> pickImageLauncher;
 
     // Presentador
     private RegistroPresenter presenter;
@@ -55,6 +69,21 @@ public class RegistroActivity extends AppCompatActivity implements RegistroContr
         editTextPassword = findViewById(R.id.passwordEditText);
         btnRegister = findViewById(R.id.registerButton);
         textViewLogin = findViewById(R.id.loginText);
+        userImageView = findViewById(R.id.userImage);
+        addImageButton = findViewById(R.id.addUserImageButton);
+
+        pickImageLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();if (data != null && data.getData() != null) {
+                            Uri imagePath = data.getData();
+                            Glide.with(this)
+                                    .load(imagePath)
+                                    .into(userImageView);
+                        }
+                    }
+                });
 
         // Creación del presentador
         presenter = new RegistroPresenter(this, new RegistroModel());
@@ -67,12 +96,26 @@ public class RegistroActivity extends AppCompatActivity implements RegistroContr
             }
         });
 
+        addImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
+
         textViewLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navigateToLogin();
             }
         });
+    }
+
+    private void selectImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        pickImageLauncher.launch(Intent.createChooser(intent, "Selecciona una imagen"));
     }
 
     @Override
