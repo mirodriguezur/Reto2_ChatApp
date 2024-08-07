@@ -52,6 +52,7 @@ public class RegistroActivity extends AppCompatActivity implements RegistroContr
     private TextView textViewLogin;
     private ImageView userImageView;
     private FloatingActionButton addImageButton;
+    private Uri imagePath;
 
     private ActivityResultLauncher<Intent> pickImageLauncher;
 
@@ -78,6 +79,7 @@ public class RegistroActivity extends AppCompatActivity implements RegistroContr
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent data = result.getData();if (data != null && data.getData() != null) {
                             Uri imagePath = data.getData();
+                            this.imagePath = imagePath;
                             Glide.with(this)
                                     .load(imagePath)
                                     .into(userImageView);
@@ -156,5 +158,10 @@ public class RegistroActivity extends AppCompatActivity implements RegistroContr
     public String getPassword() {
         // Obtener la contraseña ingresada por el usuario
         return editTextPassword.getText().toString().trim();
+    }
+
+    @Override
+    public Uri getImagePath() {
+        return imagePath;
     }
 }

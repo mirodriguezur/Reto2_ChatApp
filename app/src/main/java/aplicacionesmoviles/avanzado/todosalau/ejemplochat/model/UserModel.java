@@ -7,16 +7,18 @@ public class UserModel {
     private String email;            // Correo electrónico del usuario
     private String name;             // Nombre del usuario
     private List<String> messageIds; // Lista de IDs de los mensajes enviados por el usuario
+    private String profilePicture; // URL de la imagen de perfil
 
     // Constructor vacío necesario para Firebase
     public UserModel() {
     }
 
     // Constructor para inicializar un UserModel con ID, correo electrónico y nombre
-    public UserModel(String userId, String email, String name) {
+    public UserModel(String userId, String email, String name, String profilePicture) {
         this.userId = userId;
         this.email = email;
         this.name = name;
+        this.profilePicture = profilePicture;
     }
 
     // Getter y setter para la lista de IDs de los mensajes enviados por el usuario
@@ -51,5 +53,13 @@ public class UserModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(String profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }
