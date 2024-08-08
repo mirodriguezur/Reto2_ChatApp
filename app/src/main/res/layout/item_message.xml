@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sender_name"
-            android:textStyle="bold"
+            android:fontFamily="@font/nunito_sans_bold"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
         <!-- Message Text -->
@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/message_text"
+            android:fontFamily="@font/nunito_sans_extralight"
             android:textColor="@android:color/black"
             android:textSize="14sp"
             android:layout_marginTop="4dp" />
@@ -33,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/timestamp"
+            android:fontFamily="@font/nunito_sans_extralight"
             android:textColor="@android:color/darker_gray"
             android:textSize="12sp"
             android:layout_marginTop="4dp" />
