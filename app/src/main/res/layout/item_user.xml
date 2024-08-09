@@ -19,7 +19,7 @@
             android:text="@string/title_user_found"
             android:textSize="20sp"
             android:gravity="center"
-            android:textStyle="bold"
+            android:fontFamily="@font/nunito_sans_bold"
             android:paddingBottom="10dp" />
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,12 +42,14 @@
                     android:id="@+id/textViewName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_sans_bold"
                     android:text="@string/name_user" />
                 <TextView
                     android:id="@+id/textViewEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/email_user" />
+                    android:text="@string/email_user"
+                    android:fontFamily="@font/nunito_sans_extralight" />
             </LinearLayout>
             <!-- Botón "Chatear" -->
             <Button
@@ -55,6 +57,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/chat_button"
+                android:backgroundTint="#426754"
+                android:fontFamily="@font/nunito_sans_bold"
                 android:layout_gravity="center_vertical" />
         </LinearLayout>
     </LinearLayout>

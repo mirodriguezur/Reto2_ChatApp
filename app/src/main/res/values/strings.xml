@@ -11,6 +11,8 @@
 
     <!-- Textos de la vista de inicio de sesión -->
     <string name="login_header_image_desc">Imagen del encabezado</string>
+    <string name="conectate">Conéctate</string>
+    <string name="bienvenido">Bienvenido</string>
     <string name="login_title_text">Iniciar sesión</string>
     <string name="login_email_hint">Correo electrónico</string>
     <string name="login_password_hint">Contraseña</string>

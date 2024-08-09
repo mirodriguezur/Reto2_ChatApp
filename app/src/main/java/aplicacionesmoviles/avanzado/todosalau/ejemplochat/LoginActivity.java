@@ -1,6 +1,7 @@
 package aplicacionesmoviles.avanzado.todosalau.ejemplochat;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     private EditText editTextPassword;
     private Button btnLogin;
     private TextView registerText;
+    private Button showLoginButton;
+    private CardView loginCardView;
 
     // Presentador
     private LoginPresenter presenter;
@@ -38,6 +41,23 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         editTextPassword = findViewById(R.id.passwordEditTextLogin);
         btnLogin = findViewById(R.id.loginButton);
         registerText = findViewById(R.id.registerText);
+
+        // Inicialización de los elementos de la vista
+        showLoginButton = findViewById(R.id.beginButton);
+        loginCardView = findViewById(R.id.loginCardView);
+
+        // Configurar el comportamiento del botón para mostrar el login
+        showLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Alternar la visibilidad del CardView de login
+                if (loginCardView.getVisibility() == View.GONE) {
+                    loginCardView.setVisibility(View.VISIBLE);
+                } else {
+                    loginCardView.setVisibility(View.GONE);
+                }
+            }
+        });
 
         // Creación del presentador
         presenter = new LoginPresenter(this, new LoginModel());
